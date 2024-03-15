@@ -348,3 +348,7 @@ Remember to replace placeholders like **/C=US/ST=YourState/L=YourCity/O=YourOrga
 with your actual information 
 
 This ensures that the certificates accurately represent the entities involved
+
+This is the files generated with the steps explained above
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/0bd51ebd-b762-4c02-aafc-263aef0444ae)
