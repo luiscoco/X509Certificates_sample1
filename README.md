@@ -296,7 +296,9 @@ openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
 Create the CA Certificate
 
 ```
-openssl req -x509 -new -nodes -key ca_key.pem -days 1024 -out ca_cert.pem -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName"
+openssl req -x509 -new -nodes -key ca_key.pem ^
+-days 1024 -out ca_cert.pem ^
+-subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName"
 ```
 
 **Step 2**: Generate the Client's Key and CSR
@@ -310,7 +312,9 @@ openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
 Create a CSR for the Client
 
 ```
-openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName"
+openssl req -new -key client_key.pem ^
+-out client.csr ^
+-subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName"
 ```
 
 **Step 3**: Sign the Client CSR with Your CA
@@ -318,7 +322,9 @@ openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L
 Sign the CSR to Create the Client Certificate
 
 ```
-openssl x509 -req -in client.csr -CA ca_cert.pem -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 365 -sha256
+openssl x509 -req -in client.csr ^
+-CA ca_cert.pem -CAkey ca_key.pem -CAcreateserial ^
+-out client_cert.pem -days 365 -sha256
 ```
 
 **Step 4**: Create a PFX File from the Client Certificate and Key
@@ -326,7 +332,11 @@ openssl x509 -req -in client.csr -CA ca_cert.pem -CAkey ca_key.pem -CAcreateseri
 Generate the PFX File
 
 ```
-openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.pem -password pass:your_password
+openssl pkcs12 -export -out client_cert.pfx ^
+-inkey client_key.pem ^
+-in client_cert.pem ^
+-certfile ca_cert.pem ^
+-password pass:your_password
 ```
 
 Replace your_password with a secure password of your choice. This password will be used to protect the PFX file
