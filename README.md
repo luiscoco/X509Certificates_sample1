@@ -146,5 +146,78 @@ Please ensure you replace "**password**" with a strong, securely generated passw
 
 Also, for production use, consider obtaining certificates from a trusted CA to ensure the security and trustworthiness of your IoT ecosystem
 
+## 4. Integrating X.509 certificates for securing MQTT communication
+
+Using the **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves configuring the MQTT client to use **SSL/TLS** for encrypted connections
+
+Below is an example that demonstrates how to connect to an **MQTT** broker using **TLS** with an **X.509** certificate for authentication
+
+This example is particularly useful for **IoT** scenarios where secure communication is crucial
+
+First, ensure you have the **M2Mqtt** library in your project. You can add it via NuGet:
+
+```
+Install-Package M2Mqtt
+```
+
+Here is a sample C# application that creates an **MQTT** client, which uses an **X.509** certificate for a secure connection:
+
+```csharp
+using System;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using System.Security.Cryptography.X509Certificates;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Broker URL (use your MQTT broker's hostname or IP address)
+        string mqttBrokerUrl = "your_mqtt_broker_url";
+
+        // Path to the CA certificate file (if needed, for broker certificate validation)
+        string caCertPath = @"path_to_ca_certificate.cer";
+
+        // Path to the client certificate file (PFX file containing the certificate and private key)
+        string clientCertPath = @"path_to_client_certificate.pfx";
+        string clientCertPassword = "your_client_certificate_password"; // Password for the PFX file
+
+        // Load the client certificate
+        X509Certificate clientCert = new X509Certificate2(clientCertPath, clientCertPassword);
+
+        // Load the CA certificate if your MQTT broker uses a self-signed certificate
+        // Comment out the next line if your broker's certificate is signed by a well-known CA already trusted by the system
+        X509Certificate caCert = X509Certificate.CreateFromCertFile(caCertPath);
+
+        // Create the MQTT client instance
+        MqttClient client = new MqttClient(mqttBrokerUrl, MqttSettings.MQTT_BROKER_DEFAULT_SSL_PORT, true, caCert, clientCert, MqttSslProtocols.TLSv1_2);
+
+        // Register to message received
+        client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
+
+        // Connect to the broker
+        string clientId = Guid.NewGuid().ToString();
+        client.Connect(clientId);
+
+        // Subscribe to a topic
+        string topic = "your/subscription/topic";
+        client.Subscribe(new string[] { topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
+        Console.WriteLine("MQTT Client connected and subscribed to topic. Press any key to exit...");
+        Console.ReadKey();
+
+        // Clean up
+        client.Disconnect();
+    }
+
+    static void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+    {
+        // Handle message received
+        string receivedMessage = System.Text.Encoding.UTF8.GetString(e.Message);
+        Console.WriteLine($"Message received on topic {e.Topic}: {receivedMessage}");
+    }
+}
+```
+
 
 
