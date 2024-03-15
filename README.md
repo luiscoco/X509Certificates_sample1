@@ -227,6 +227,8 @@ The **CA certificate** is needed if the broker uses a **self-signed** certificat
 
 If your broker's certificate is issued by a **well-known CA**, you might not need to load a CA certificate explicitly
 
-This code sets up an **MQTT client** to connect securely to an MQTT broker using **TLS version 1.2**, subscribes to a topic, and prints out messages received on that topic
+This code sets up an **MQTT client** to connect securely to an MQTT broker using **TLS version 1.2**, subscribes to a topic,
+
+and prints out messages received on that topic
 
 It registers an event handler for processing received messages and uses both CA and client certificates for the **SSL/TLS** connection setup
