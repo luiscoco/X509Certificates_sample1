@@ -146,7 +146,7 @@ Please ensure you replace "**password**" with a strong, securely generated passw
 
 Also, for production use, consider obtaining certificates from a trusted CA to ensure the security and trustworthiness of your IoT ecosystem
 
-## 4. Integrating X.509 certificates for securing MQTT communication
+## 4. Sample 3: Integrating X.509 certificates for securing MQTT communication
 
 Using the **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves
 
