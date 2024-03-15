@@ -132,17 +132,17 @@ class Program
 
 This code does the following:
 
-- Generates a new RSA key pair to be used for the certificate
+- Generates a new **RSA key pair** to be used for the certificate
 
-- Creates a self-signed certificate request with the specified subject name, using SHA256 for signing
+- Creates a **self-signed** certificate request with the specified subject name, using SHA256 for signing
 
-- Sets the certificate validity for 1 year
+- Sets the certificate **validity** for 1 year
 
-- Exports the certificate with the private key in a PFX file, protected by a password. This file format is commonly used to store both the certificate and its private key securely
+- Exports the certificate with the private key in a **PFX file**, protected by a password. This file format is commonly used to store both the certificate and its private key securely
 
-- Also exports the certificate without the private key in a DER-encoded .cer file, which can be used in situations where only the public part of the certificate is needed
+- Also exports the certificate without the private key in a DER-encoded **.cer** file, which can be used in situations where only the public part of the certificate is needed
 
-Please ensure you replace "password" with a strong, securely generated password in a real application, especially if you're going to use the certificate in a production environment
+Please ensure you replace "**password**" with a strong, securely generated password in a real application, especially if you're going to use the certificate in a production environment
 
 Also, for production use, consider obtaining certificates from a trusted CA to ensure the security and trustworthiness of your IoT ecosystem
 
