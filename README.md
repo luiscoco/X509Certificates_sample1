@@ -148,7 +148,9 @@ Also, for production use, consider obtaining certificates from a trusted CA to e
 
 ## 4. Integrating X.509 certificates for securing MQTT communication
 
-Using the **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves configuring the MQTT client to use **SSL/TLS** for encrypted connections
+Using the **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves
+
+configuring the MQTT client to use **SSL/TLS** for encrypted connections
 
 Below is an example that demonstrates how to connect to an **MQTT** broker using **TLS** with an **X.509** certificate for authentication
 
