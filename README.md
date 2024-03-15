@@ -261,7 +261,7 @@ and prints out messages received on that topic
 
 It registers an event handler for processing received messages and uses both CA and client certificates for the **SSL/TLS** connection setup
 
-### 4.3. How to install OpenSSL
+### 4.3. How to install OpenSSL for generating the certificates
 
 Downloading **OpenSSL**:
 
