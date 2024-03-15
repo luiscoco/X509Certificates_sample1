@@ -14,7 +14,9 @@ such as encrypting data, signing code, or establishing secure connections over t
 
 Key classes and types in the **System.Security.Cryptography.X509Certificates** namespace include:
 
-**X509Certificate and X509Certificate2**: These classes represent an X.509 certificate. X509Certificate2 is an enhanced version that provides more functionality than the X509Certificate class
+**X509Certificate and X509Certificate2**: These classes represent an X.509 certificate
+
+X509Certificate2 is an enhanced version that provides more functionality than the X509Certificate class
 
 **X509Store**: Represents a store of certificates. This can be thought of as a database on the system that holds certificates
 
