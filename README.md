@@ -166,9 +166,9 @@ For a quick start, I'll use **HiveMQ's public MQTT** broker for this example, wh
 
 However, remember that it's **public**, so don't send sensitive information through it
 
-In this sample we are going to use **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves
+In this sample we are going to use **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509**
 
-configuring the MQTT client to use **SSL/TLS** for encrypted connections
+certificate-based security involves configuring the MQTT client to use **SSL/TLS** for encrypted connections
 
 Below is an example that demonstrates how to connect to an **MQTT** broker using **TLS** with an **X.509** certificate for authentication
 
