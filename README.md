@@ -85,13 +85,13 @@ In a real-world scenario, you would replace this logic with proper certificate v
 
 ## 3. Sample 2: Creating a certificate for an IoT device and storing it in a file
 
-The following is a simplified C# example demonstrating how to create a self-signed X.509 certificate and store it in a file
+The following is a simplified C# example demonstrating how to create a **self-signed X.509** certificate and store it in a file
 
 This example might be particularly useful in a development or testing environment for IoT devices
 
-Note that for production environments, certificates should ideally be issued by a trusted Certificate Authority (CA)
+Note that for production environments, certificates should ideally be issued by a **trusted Certificate Authority (CA)**
 
-This example focuses on creating a self-signed certificate and saving it as a PFX file (which can contain both the certificate and the private key) and as a DER-encoded .cer file (certificate only)
+This example focuses on creating a self-signed certificate and saving it as a **PFX file** (which can contain both the certificate and the private key) and as a DER-encoded .cer file (certificate only)
 
 ```csharp
 using System;
