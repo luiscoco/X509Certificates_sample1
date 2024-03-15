@@ -300,19 +300,21 @@ This command generates a 2048-bit RSA private key and saves it to **ca_key.pem**
 **Generate the CA Certificate**
 
 ```
-openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 1024 -out ca_cert.cer -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName"
+openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 1024 -out ca_cert.cer
 ```
 
-This command generates a **self-signed X.509** certificate (**ca_cert.cer**) using the private key (**ca_key.pem**)
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/dc6d9d12-878f-49d3-b65f-36f9307faea8)
 
-You should replace the **/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName** part with your details
+See the file generated **ca_key.pem**
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/736f25d2-dd12-48d7-9f3c-f7a84322e8b5)
 
 **Create the Client Certificate**
 
 **Generate the Client Private Key**
 
 ```
-openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
+openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
 ```
 
 **Create a Certificate Signing Request (CSR) for the Client Certificate**
