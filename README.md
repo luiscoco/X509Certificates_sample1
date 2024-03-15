@@ -26,7 +26,7 @@ X509Certificate2 is an enhanced version that provides more functionality than th
 
 **X509CertificateCollection**: A collection that stores multiple X.509 certificates
 
-## 2. Establishing an SSL/TLS Connection
+## 2. Sample 1: Establishing an SSL/TLS Connection
 
 A very common use case for **System.Security.Cryptography.X509Certificates** is to establish an **SSL/TLS** connection to a server in a secure manner
 
@@ -74,5 +74,13 @@ class Program
     }
 }
 ```
+
+This example demonstrates making an HTTPS request and printing the server's certificate issuer and subject
+
+The custom validation function always returns true, meaning it trusts any certificate
+
+In a real-world scenario, you would replace this logic with proper certificate validation to ensure security
+
+## 3. Sample 2:  
 
 
