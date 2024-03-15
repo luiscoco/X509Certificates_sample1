@@ -156,11 +156,15 @@ In the following example we are going to use the **HiveMQ broker**: https://www.
 
 For a quick start, I'll use **HiveMQ's public MQTT** broker for this example, which doesn't require any setup:
 
-**Broker URL**: broker.hivemq.com
+**Host**: broker.hivemq.com
 
-**Port (TLS)**: 8883
+**TCP Port**: 1883
 
-**Port (non-TLS)**: 1883
+**Websocket Port**:	8000
+
+**TLS TCP Port**: 8883
+
+**TLS Websocket Port**: 8884
 
 **No authentication** is needed for this public broker, and it's great for testing
 
