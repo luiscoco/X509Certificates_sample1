@@ -285,48 +285,60 @@ If the installation was successful, you should see the **OpenSSL version** infor
 
 ### 4.4. How to create the certificates
 
-2. Create the CA Certificate
-A CA certificate is used to sign other certificates. Here's how to create your own CA certificate:
+**Create the CA Certificate**
 
-a. Generate the CA Private Key
+A **CA certificate** is used to sign other certificates. Here's how to create your own CA certificate:
 
-bash
-Copy code
+**Generate the CA Private Key**
+
+```
 openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
-This command generates a 2048-bit RSA private key and saves it to ca_key.pem.
+```
 
-b. Generate the CA Certificate
+This command generates a 2048-bit RSA private key and saves it to **ca_key.pem**
 
-bash
-Copy code
+**Generate the CA Certificate**
+
+```
 openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 1024 -out ca_cert.cer -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName"
-This command generates a self-signed X.509 certificate (ca_cert.cer) using the private key (ca_key.pem). You should replace the /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName part with your details.
+```
 
-3. Create the Client Certificate
-a. Generate the Client Private Key
+This command generates a **self-signed X.509** certificate (**ca_cert.cer**) using the private key (**ca_key.pem**)
 
-bash
-Copy code
+You should replace the **/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName** part with your details
+
+**Create the Client Certificate**
+
+**Generate the Client Private Key**
+
+```
 openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
-b. Create a Certificate Signing Request (CSR) for the Client Certificate
+```
 
-bash
-Copy code
+**Create a Certificate Signing Request (CSR) for the Client Certificate**
+
+```
 openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientCommonName"
-c. Generate the Client Certificate using the CA
+```
 
-bash
-Copy code
+**Generate the Client Certificate using the CA**
+
+```
 openssl x509 -req -in client.csr -CA ca_cert.cer -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 500 -sha256
-4. Convert Client Certificate to PFX Format
-The PFX file contains the client certificate along with its private key, and it's protected by a password.
+```
 
-bash
-Copy code
+**Convert Client Certificate to PFX Format**
+
+The PFX file contains the client certificate along with its private key, and it's protected by a password
+
+```
 openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.cer -password pass:your_client_certificate_password
-Replace your_client_certificate_password with a secure password of your choice.
+```
 
-Conclusion
-Now, you have ca_cert.cer as your CA certificate and client_cert.pfx as your client certificate. Use these paths in your MQTT client configuration.
+Replace your_client_certificate_password with a secure password of your choice
 
-Remember, these steps are for educational or development purposes. For production environments, it's recommended to obtain certificates from a trusted certificate authority.
+**Conclusion**
+
+Now, you have ca_cert.cer as your CA certificate and client_cert.pfx as your client certificate. Use these paths in your MQTT client configuration
+
+Remember, these steps are for educational or development purposes. For production environments, it's recommended to obtain certificates from a trusted certificate authority
