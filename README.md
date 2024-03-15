@@ -351,4 +351,5 @@ This ensures that the certificates accurately represent the entities involved
 
 This is the files generated with the steps explained above
 
-![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/0bd51ebd-b762-4c02-aafc-263aef0444ae)
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/eeddf193-3d44-4aa3-8a28-fed9c3a7d0fe)
+
