@@ -36,9 +36,9 @@ Here's a simplified C# example application that demonstrates how to make an HTTP
 
 its **SSL certificate** using the **X509Certificate2** class
 
-This example overrides the default server certificate validation to introduce custom logic, which is generally not recommended for production unless you have a very specific
+This example overrides the default server certificate validation to introduce custom logic, which is generally not recommended
 
-reason and understand the security implications
+for production unless you have a very specific reason and understand the security implications
 
 ```csharp
 using System;
