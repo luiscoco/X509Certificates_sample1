@@ -285,45 +285,66 @@ If the installation was successful, you should see the **OpenSSL version** infor
 
 ### 4.4. How to create the certificates
 
-Step 1: Generate the CA's Key and Certificate
+**Step 1**: Generate the CA's Key and Certificate
+
 Generate the CA's Private Key
 
-bash
-Copy code
+```
 openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
+```
+
 Create the CA Certificate
 
-bash
-Copy code
+```
 openssl req -x509 -new -nodes -key ca_key.pem -days 1024 -out ca_cert.pem -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName"
-Step 2: Generate the Client's Key and CSR
+```
+
+**Step 2**: Generate the Client's Key and CSR
+
 Generate the Client's Private Key
 
-bash
-Copy code
+```
 openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
+```
+
 Create a CSR for the Client
 
-bash
-Copy code
+```
 openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName"
-Step 3: Sign the Client CSR with Your CA
+```
+
+**Step 3**: Sign the Client CSR with Your CA
+
 Sign the CSR to Create the Client Certificate
 
-bash
-Copy code
+```
 openssl x509 -req -in client.csr -CA ca_cert.pem -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 365 -sha256
-Step 4: Create a PFX File from the Client Certificate and Key
+```
+
+**Step 4**: Create a PFX File from the Client Certificate and Key
+
 Generate the PFX File
 
-bash
-Copy code
+```
 openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.pem -password pass:your_password
-Replace your_password with a secure password of your choice. This password will be used to protect the PFX file.
+```
 
-Explanation of Each Step:
-Generating keys: Both the CA and the client need their own private keys, generated in Steps 1.1 and 2.1.
-Creating certificates: The CA certificate is self-signed (Step 1.2), while the client certificate is signed by the CA to establish a trust chain (Step 3).
-CSR (Certificate Signing Request): The CSR (created in Step 2.2) is a request to the CA for signing and creating a certificate for the client.
-Creating a PFX file: The PFX file (Step 4) is a bundled file format that includes the client's private key, the client certificate, and optionally the CA certificate. This format is commonly used for importing and exporting certificates and private keys on Windows systems and can be protected with a password for security.
-Remember to replace placeholders like /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName and /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName with your actual information. This ensures that the certificates accurately represent the entities involved.
+Replace your_password with a secure password of your choice. This password will be used to protect the PFX file
+
+**Explanation of Each Step**:
+
+**Generating keys**: Both the CA and the client need their own private keys, generated in Steps 1.1 and 2.1
+
+**Creating certificates**: The CA certificate is self-signed (Step 1.2), while the client certificate is signed by the CA to establish a trust chain (**Step 3**)
+
+**CSR (Certificate Signing Request)**: The CSR (created in Step 2.2) is a request to the CA for signing and creating a certificate for the client
+
+**Creating a PFX file**: The PFX file (Step 4) is a bundled file format that includes the client's private key, the client certificate, and optionally the CA certificate
+
+This format is commonly used for importing and exporting certificates and private keys on Windows systems and can be protected with a password for security
+
+Remember to replace placeholders like **/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName** and **/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName**
+
+with your actual information 
+
+This ensures that the certificates accurately represent the entities involved
