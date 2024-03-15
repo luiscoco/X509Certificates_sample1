@@ -219,9 +219,9 @@ class Program
 }
 ```
 
-Replace placeholders like **your_mqtt_broker_url**, **path_to_ca_certificate.cer**, **path_to_client_certificate.pfx**, and **your_client_certificate_password** 
+Replace placeholders like **your_mqtt_broker_url**, **path_to_ca_certificate.cer**, **path_to_client_certificate.pfx**, 
 
-with your actual **MQTT** broker's details and certificate paths
+and **your_client_certificate_password** with your actual **MQTT** broker's details and certificate paths
 
 The **CA certificate** is needed if the broker uses a **self-signed** certificate or a certificate not trusted by the system's certificate store
 
