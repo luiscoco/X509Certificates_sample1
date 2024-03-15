@@ -285,62 +285,45 @@ If the installation was successful, you should see the **OpenSSL version** infor
 
 ### 4.4. How to create the certificates
 
-**Create the CA Certificate**
+Step 1: Generate the CA's Key and Certificate
+Generate the CA's Private Key
 
-A **CA certificate** is used to sign other certificates. Here's how to create your own CA certificate:
-
-**Generate the CA Private Key**
-
-```
+bash
+Copy code
 openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
-```
+Create the CA Certificate
 
-This command generates a 2048-bit RSA private key and saves it to **ca_key.pem**
+bash
+Copy code
+openssl req -x509 -new -nodes -key ca_key.pem -days 1024 -out ca_cert.pem -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName"
+Step 2: Generate the Client's Key and CSR
+Generate the Client's Private Key
 
-**Generate the CA Certificate**
+bash
+Copy code
+openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
+Create a CSR for the Client
 
-```
-openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 1024 -out ca_cert.cer
-```
+bash
+Copy code
+openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName"
+Step 3: Sign the Client CSR with Your CA
+Sign the CSR to Create the Client Certificate
 
-![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/dc6d9d12-878f-49d3-b65f-36f9307faea8)
+bash
+Copy code
+openssl x509 -req -in client.csr -CA ca_cert.pem -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 365 -sha256
+Step 4: Create a PFX File from the Client Certificate and Key
+Generate the PFX File
 
-See the file generated **ca_key.pem**
+bash
+Copy code
+openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.pem -password pass:your_password
+Replace your_password with a secure password of your choice. This password will be used to protect the PFX file.
 
-![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/736f25d2-dd12-48d7-9f3c-f7a84322e8b5)
-
-**Create the Client Certificate**
-
-**Generate the Client Private Key**
-
-```
-openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
-```
-
-**Create a Certificate Signing Request (CSR) for the Client Certificate**
-
-```
-openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientCommonName"
-```
-
-**Generate the Client Certificate using the CA**
-
-```
-openssl x509 -req -in client.csr -CA ca_cert.cer -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 500 -sha256
-```
-
-**Convert Client Certificate to PFX Format**
-
-The PFX file contains the client certificate along with its private key, and it's protected by a password
-
-```
-openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.cer -password pass:your_client_certificate_password
-```
-
-Replace your_client_certificate_password with a secure password of your choice
-
-**Conclusion**
-
-Now, you have ca_cert.cer as your CA certificate and client_cert.pfx as your client certificate. Use these paths in your MQTT client configuration
-
-Remember, these steps are for educational or development purposes. For production environments, it's recommended to obtain certificates from a trusted certificate authority
+Explanation of Each Step:
+Generating keys: Both the CA and the client need their own private keys, generated in Steps 1.1 and 2.1.
+Creating certificates: The CA certificate is self-signed (Step 1.2), while the client certificate is signed by the CA to establish a trust chain (Step 3).
+CSR (Certificate Signing Request): The CSR (created in Step 2.2) is a request to the CA for signing and creating a certificate for the client.
+Creating a PFX file: The PFX file (Step 4) is a bundled file format that includes the client's private key, the client certificate, and optionally the CA certificate. This format is commonly used for importing and exporting certificates and private keys on Windows systems and can be protected with a password for security.
+Remember to replace placeholders like /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCAName and /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientName with your actual information. This ensures that the certificates accurately represent the entities involved.
