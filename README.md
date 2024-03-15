@@ -54,7 +54,7 @@ class Program
         // Override the default server certificate validation callback
         ServicePointManager.ServerCertificateValidationCallback = ServerCertificateCustomValidation;
 
-        string url = "https://example.com";
+        string url = "https://google.com";
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
         using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
         {
