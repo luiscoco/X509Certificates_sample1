@@ -32,7 +32,9 @@ A very common use case for **System.Security.Cryptography.X509Certificates** is 
 
 This involves validating the **server's SSL certificate** to ensure it's **trusted**, valid, and matches the server you're connecting to
 
-Here's a simplified C# example application that demonstrates how to make an HTTPS request to a **server** while validating its **SSL certificate** using the **X509Certificate2** class
+Here's a simplified C# example application that demonstrates how to make an HTTPS request to a **server** while validating
+
+its **SSL certificate** using the **X509Certificate2** class
 
 This example overrides the default server certificate validation to introduce custom logic, which is generally not recommended for production unless you have a very specific
 
