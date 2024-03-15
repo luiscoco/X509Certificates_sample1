@@ -8,8 +8,8 @@ These are digital certificates that follow the **X.509** standard defined by the
 
 **X.509** certificates are used in many security protocols, including SSL/TLS for securing web communications
 
-Certificates serve as a form of digital identity for entities (like servers, clients, or users) and can be used for various purposes, such as encrypting data,
+Certificates serve as a form of digital identity for entities (like servers, clients, or users) and can be used for various purposes, 
 
-signing code, or establishing secure connections over the internet
+such as encrypting data, signing code, or establishing secure connections over the internet
 
 
