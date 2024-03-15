@@ -150,6 +150,8 @@ Also, for production use, consider obtaining certificates from a trusted CA to e
 
 ## 4. Sample 3: Integrating X.509 certificates for securing MQTT communication
 
+### 4.1. How to use the public HiveMQ (a Mqtt public message broker) 
+
 In the following example we are going to use the **HiveMQ broker**: https://www.hivemq.com/mqtt/public-mqtt-broker/
 
 ![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/a1eb42d3-d8a8-4d05-a772-aaabdb3d16fd)
@@ -169,6 +171,8 @@ For a quick start, I'll use **HiveMQ's public MQTT** broker for this example, wh
 **No authentication** is needed for this public broker, and it's great for testing
 
 However, remember that it's **public**, so don't send sensitive information through it
+
+### 4.2. Application sample
 
 In this sample we are going to use **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509**
 
@@ -256,3 +260,73 @@ This code sets up an **MQTT client** to connect securely to an MQTT broker using
 and prints out messages received on that topic
 
 It registers an event handler for processing received messages and uses both CA and client certificates for the **SSL/TLS** connection setup
+
+### 4.3. How to install OpenSSL
+
+Downloading **OpenSSL**:
+
+Go to the official OpenSSL website for Windows downloads. You can search for "https://slproweb.com/products/Win32OpenSSL.html"
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/c87a4352-d3d0-4a25-9203-af8d1fbf24a8)
+
+Locate the appropriate installer for your system. It's crucial to choose the version that matches your Windows architecture (32-bit or 64-bit).
+
+Installation Process:
+
+Run the downloaded installer
+
+Copy and paste the **OpenSSL bin folder** in the **PATH environmental variable**
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/87787880-bc64-46f7-ace4-88a5d35b765e)
+
+If the installation was successful, you should see the **OpenSSL version** information displayed
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/339272ba-35c0-4ec7-988e-c8a938711678)
+
+### 4.4. How to create the certificates
+
+2. Create the CA Certificate
+A CA certificate is used to sign other certificates. Here's how to create your own CA certificate:
+
+a. Generate the CA Private Key
+
+bash
+Copy code
+openssl genpkey -algorithm RSA -out ca_key.pem -pkeyopt rsa_keygen_bits:2048
+This command generates a 2048-bit RSA private key and saves it to ca_key.pem.
+
+b. Generate the CA Certificate
+
+bash
+Copy code
+openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 1024 -out ca_cert.cer -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName"
+This command generates a self-signed X.509 certificate (ca_cert.cer) using the private key (ca_key.pem). You should replace the /C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourCommonName part with your details.
+
+3. Create the Client Certificate
+a. Generate the Client Private Key
+
+bash
+Copy code
+openssl genpkey -algorithm RSA -out client_key.pem -pkeyopt rsa_keygen_bits:2048
+b. Create a Certificate Signing Request (CSR) for the Client Certificate
+
+bash
+Copy code
+openssl req -new -key client_key.pem -out client.csr -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=YourClientCommonName"
+c. Generate the Client Certificate using the CA
+
+bash
+Copy code
+openssl x509 -req -in client.csr -CA ca_cert.cer -CAkey ca_key.pem -CAcreateserial -out client_cert.pem -days 500 -sha256
+4. Convert Client Certificate to PFX Format
+The PFX file contains the client certificate along with its private key, and it's protected by a password.
+
+bash
+Copy code
+openssl pkcs12 -export -out client_cert.pfx -inkey client_key.pem -in client_cert.pem -certfile ca_cert.cer -password pass:your_client_certificate_password
+Replace your_client_certificate_password with a secure password of your choice.
+
+Conclusion
+Now, you have ca_cert.cer as your CA certificate and client_cert.pfx as your client certificate. Use these paths in your MQTT client configuration.
+
+Remember, these steps are for educational or development purposes. For production environments, it's recommended to obtain certificates from a trusted certificate authority.
