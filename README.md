@@ -150,7 +150,23 @@ Also, for production use, consider obtaining certificates from a trusted CA to e
 
 ## 4. Sample 3: Integrating X.509 certificates for securing MQTT communication
 
-Using the **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves
+In the following example we are going to use the **HiveMQ broker**: https://www.hivemq.com/mqtt/public-mqtt-broker/
+
+![image](https://github.com/luiscoco/X509Certificates_sample1/assets/32194879/a1eb42d3-d8a8-4d05-a772-aaabdb3d16fd)
+
+For a quick start, I'll use **HiveMQ's public MQTT** broker for this example, which doesn't require any setup:
+
+**Broker URL**: broker.hivemq.com
+
+**Port (TLS)**: 8883
+
+**Port (non-TLS)**: 1883
+
+**No authentication** is needed for this public broker, and it's great for testing
+
+However, remember that it's **public**, so don't send sensitive information through it
+
+In this sample we are going to use **uPLibrary.Networking.M2Mqtt** library for **MQTT** communications with **X.509** certificate-based security involves
 
 configuring the MQTT client to use **SSL/TLS** for encrypted connections
 
